@@ -9,16 +9,13 @@ namespace CabInvoiceGenerator
     {
         //Variable.
         RideType rideType;
-        private RideRepository rideRepository;
 
-        //Constants.
+        public RideRepository rideRepository { get; set; }
+        //private RideRepository rideRepository;
         private readonly double MINIMUM_COST_PER_KM;
         private readonly int COST_PER_TIME;
         private readonly double MINIMUM_FARE;
 
-        /// Constrcutor To Create RideRepository instance.
-        /// </summary>
-        /// <summary>
         public InvoiceGenerator(RideType rideType)
         {
             this.rideType = rideType;
@@ -93,6 +90,21 @@ namespace CabInvoiceGenerator
                 totalFare = totalFare + ig.CalculateFare(ride.distance, ride.time);
             }
             return totalFare;
+        }
+
+        public void AddRides(string userId, Ride[] rides)
+        {
+            try
+            {
+                rideRepository.AddRide(userId, rides);
+            }
+            catch (CabInvoiceException)
+            {
+                if (rides == null)
+                {
+                    throw new CabInvoiceException(CabInvoiceException.ExceptionType.NULL_RIDES, "Rides Are Null");
+                }
+            }
         }
     }
 }

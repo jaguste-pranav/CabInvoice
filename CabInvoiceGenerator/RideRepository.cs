@@ -42,16 +42,12 @@ namespace CabInvoiceGenerator
                 throw new CabInvoiceException(CabInvoiceException.ExceptionType.NULL_RIDES, "Rides Are Null");
             }
         }
-        /// <summary>
-        /// Function To Get Rides List As an Array for specified UserId. 
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <returns></returns>
+
         public Ride[] GetRides(string userId)
         {
             try
             {
-                return this.userRides[userId].ToArray();
+                return userRides[userId].ToArray();
             }
             catch (Exception)
             {

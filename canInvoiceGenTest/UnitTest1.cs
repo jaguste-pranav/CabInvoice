@@ -60,5 +60,23 @@ namespace canInvoiceGenTest
             Assert.AreEqual(expected.averageFare, summary.averageFare);
             Assert.AreEqual(expected.numberOfRides, summary.numberOfRides);
         }
+
+        [Test]
+        public void GivenUserId_ShouldReturnListOfRides()
+        {
+            Ride[] rides =
+            {
+                new Ride(2.0, 2),
+                new Ride(5.0, 5),
+                new Ride(3.0, 3),
+                new Ride(8.0, 8)
+            };
+
+            string userId = "1";
+            InvoiceGenerator invoiceGenerator = new InvoiceGenerator(RideType.NORMAL);
+            invoiceGenerator.AddRides(userId, rides);
+            Ride[] output = invoiceGenerator.rideRepository.GetRides(userId);
+            Assert.AreEqual(rides, output);
+        }
     }
 }
