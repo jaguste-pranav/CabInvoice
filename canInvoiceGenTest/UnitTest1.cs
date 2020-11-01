@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using CabInvoiceGenerator;
+using System.Linq;
 
 namespace canInvoiceGenTest
 {
@@ -40,6 +41,24 @@ namespace canInvoiceGenTest
             double expected = 198;
             double actualFare = InvoiceGenerator.CalculateFare(rides);
             Assert.AreEqual(expected, actualFare);
+        }
+
+        [Test]
+        public void GivenMultipleRides_ShouldReturnInvoiceSummary()
+        {
+            Ride[] rides =
+            {
+                new Ride(2.0, 2),
+                new Ride(5.0, 5),
+                new Ride(3.0, 3),
+                new Ride(8.0, 8)
+            };
+            
+            InvoiceSummary expected = new InvoiceSummary(4, 198);
+            InvoiceSummary summary = new InvoiceSummary(rides.Length, InvoiceGenerator.CalculateFare(rides));
+            Assert.AreEqual(expected.totalFare, summary.totalFare);
+            Assert.AreEqual(expected.averageFare, summary.averageFare);
+            Assert.AreEqual(expected.numberOfRides, summary.numberOfRides);
         }
     }
 }
