@@ -78,5 +78,16 @@ namespace canInvoiceGenTest
             Ride[] output = invoiceGenerator.rideRepository.GetRides(userId);
             Assert.AreEqual(rides, output);
         }
+
+        [Test]
+        public void GivenMultipleRidesOfPremium_ShouldReturnTotalFare()
+        {
+            InvoiceGenerator invoiceGenerator = new InvoiceGenerator(RideType.PREMIUM);
+            double distance = 10.0;
+            int time = 6;
+            double fare = invoiceGenerator.CalculateFare(distance, time);
+            double expected = 162;
+            Assert.AreEqual(expected, fare);
+        }
     }
 }
